@@ -94,11 +94,11 @@ const ChartView = ({ ticker }) => {
               doubleTap={{ step: 0.5 }}
               pinch={{ step: 5 }}
             >
-              {({ zoomIn, zoomOut, resetTransform, state }) => (
+              {({ zoomIn, zoomOut, resetTransform, instance }) => (
                 <>
                   {/* Floating Controls */}
                   <div className="absolute bottom-6 right-6 z-20 flex flex-col gap-2">
-                    {state.scale > 1 && (
+                    {instance?.transformState?.scale > 1 && (
                       <button 
                         onClick={() => resetTransform()}
                         className="p-3 rounded-full bg-blue-500 text-white shadow-lg animate-fade-in"
