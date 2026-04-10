@@ -50,7 +50,7 @@ const ChartView = ({ ticker }) => {
             {ticker.market} | {ticker.filename}
           </p>
         </div>
-        
+
         <div className="flex gap-2 ml-4">
           {ticker.id && (
             <a
@@ -99,7 +99,7 @@ const ChartView = ({ ticker }) => {
                   {/* Floating Controls */}
                   <div className="absolute bottom-6 right-6 z-20 flex flex-col gap-2">
                     {instance?.transformState?.scale > 1 && (
-                      <button 
+                      <button
                         onClick={() => resetTransform()}
                         className="p-3 rounded-full bg-blue-500 text-white shadow-lg animate-fade-in"
                         title="Reset Zoom"
@@ -126,7 +126,7 @@ const ChartView = ({ ticker }) => {
                             <div className="text-center p-6 bg-[#16161a] rounded-2xl border border-red-500/20">
                               <ImageOff size={40} className="text-red-500 mb-4 mx-auto" />
                               <p className="text-slate-400 text-sm mb-4">読み込み失敗</p>
-                              <button 
+                              <button
                                 onClick={() => { setLoading(true); setError(false); setRetryCount(prev => (prev + 1) % 2); }}
                                 className="px-6 py-2 rounded-xl bg-blue-500 text-white font-medium"
                               >
