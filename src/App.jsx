@@ -76,6 +76,17 @@ function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // LocalStorageからselected_ticker_idsを読み込む
+  useEffect(() => {
+    const saved = localStorage.getItem('selected_ticker_ids');
+    if (saved) setSelectedIds(JSON.parse(saved));
+  }, []);
+
+  // LocalStorageにselected_ticker_idsを保存する
+  useEffect(() => {
+    localStorage.setItem('selected_ticker_ids', JSON.stringify(selectedIds));
+  }, [selectedIds]);
+
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden text-slate-100 selection:bg-blue-500/30">
       {/* Navbar with Ticker Selector */}
