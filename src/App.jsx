@@ -58,6 +58,23 @@ function App() {
     });
   };
 
+  // スプシ保存
+  const saveToSpreadsheet = async (ids) => {
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbzCKNYJl3y-TbcbLuo90SENGZcSRtyQ_pRi76Ve8K4yZ0jRR8XdwI5QUoSYw7z9_jU/exec';
+
+    try {
+      await fetch(GAS_URL, {
+        method: 'POST',
+        mode: 'no-cors', // CORSエラー対策
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ selectedIds: ids }),
+      });
+      alert('スプレッドシートに保存しました！');
+    } catch (error) {
+      console.error('保存失敗:', error);
+    }
+  };
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -110,7 +127,12 @@ function App() {
           onNext={handleNext}
         />
       </main>
+
+      <button onClick={() => saveToSpreadsheet(selectedIds)} className="bg-green-600 p-2 rounded">
+        スプレッドシートへ同期
+      </button>
     </div>
+
   );
 }
 
