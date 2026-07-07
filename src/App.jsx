@@ -60,22 +60,25 @@ function App() {
 
   // スプシ保存
   const saveToSpreadsheet = async (ids) => {
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbwm6Yx7mMmEwnJ-HrjOn-Zsabd21wK6Ftpe-7gbj948rqWSVgf-8cm2KWIB5rcNzvE/exec';
-    try {
-      const response = await fetch(GAS_URL, {
-        method: 'POST',
-        // 'no-cors' を使うとレスポンスの中身が見えないため、
-        // CORS対応が可能なら外したほうがエラーハンドリングしやすいです
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        // ここを修正：GAS側が {selectedIds: ...} を求めているため、
-        // オブジェクトの中に配列を入れて送信します
-        body: JSON.stringify({ selectedIds: ids }),
-      });
+    // 選択された全銘柄の詳細情報を特定する必要があります
+    // selectedIds (IDの配列) を元に、tickersデータから名前などを取得
+    const selectedTickerDetails = tickers.filter(t => selectedIds.includes(t.id)).map(t => ({
+      id: t.id,
+      symbol: t.symbol,
+      name: t.name
+    }));
 
-      alert('スプレッドシートに保存しました！');
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbwm6Yx7mMmEwnJ-HrjOn-Zsabd21wK6Ftpe-7gbj948rqWSVgf-8cm2KWIB5rcNzvE/exec';
+
+    try {
+      await fetch(GAS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        // 配列全体をオブジェクトとして送信
+        body: JSON.stringify({ tickers: selectedTickerDetails }),
+      });
+      alert('銘柄リストを保存しました！');
     } catch (error) {
       console.error('保存失敗:', error);
     }
