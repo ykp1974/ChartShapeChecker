@@ -63,12 +63,11 @@ function App() {
     // 選択された全銘柄の詳細情報を特定する必要があります
     // selectedIds (IDの配列) を元に、tickersデータから名前などを取得
     const selectedTickerDetails = tickers.filter(t => selectedIds.includes(t.id)).map(t => ({
-      id: t.id,
       symbol: t.symbol,
       name: t.name
     }));
 
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbwmcKp7M62kMCaLFQel1z6s0xYvMQL_ipunObhjIeexUztNMyQBvyhuMfPOoL66bZ8/exec';
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxkIsHoqELCTaDtQvXLnAAov0jnMlEIx4EMwFt_lMU_K9bC6jN3JvV0mhmbhq_0n7U/exec';
 
     try {
       await fetch(GAS_URL, {
