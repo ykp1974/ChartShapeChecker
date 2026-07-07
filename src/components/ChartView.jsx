@@ -3,7 +3,7 @@ import { ExternalLink, RefreshCw, AlertCircle, Share2, ZoomIn, ImageOff, Maximiz
 import { motion, AnimatePresence } from 'framer-motion';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
-const ChartView = ({ ticker, onPrev, onNext }) => {
+const ChartView = ({ ticker, onPrev, onNext, selectedIds, onToggleTicker }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
@@ -41,6 +41,13 @@ const ChartView = ({ ticker, onPrev, onNext }) => {
     <div className="flex-1 flex flex-col h-full overflow-hidden bg-[#050507]">
       {/* View Header */}
       <div className="p-4 flex items-center justify-between border-b border-[#2d2d35]/30">
+        {/* チェックボックスを追加 */}
+        <input
+          type="checkbox"
+          checked={selectedIds.includes(ticker.id)} // 親から受け取った状態
+          onChange={() => onToggleTicker(ticker.id)} // 親から受け取った関数
+          className="w-5 h-5 rounded border-slate-600 bg-transparent text-blue-500 focus:ring-blue-500"
+        />
         <div className="min-w-0 flex-1">
           <h2 className="text-lg font-bold flex items-center gap-2">
             <span className="text-blue-400 font-mono">{ticker.symbol}</span>

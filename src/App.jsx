@@ -6,6 +6,14 @@ import { tickers } from './data/tickers';
 function App() {
   const [selectedTicker, setSelectedTicker] = useState(null);
   const [readStatus, setReadStatus] = useState({});
+  const [selectedIds, setSelectedIds] = useState([]);
+
+  // 2. 切り替え関数
+  const toggleTicker = (id) => {
+    setSelectedIds(prev =>
+      prev.includes(id) ? prev.filter(t => t !== id) : [...prev, id]
+    );
+  };
 
   // Load read status from local storage
   useEffect(() => {
@@ -17,7 +25,7 @@ function App() {
         console.error("Failed to load read status", e);
       }
     }
-    
+
     // Select first ticker by default
     if (tickers.length > 0) {
       setSelectedTicker(tickers[0]);
@@ -72,19 +80,21 @@ function App() {
     <div className="flex flex-col h-screen w-screen overflow-hidden text-slate-100 selection:bg-blue-500/30">
       {/* Navbar with Ticker Selector */}
       <header className="app-header">
-        <TickerSelector 
-          tickers={tickers} 
-          selectedTicker={selectedTicker} 
-          onSelect={setSelectedTicker} 
+        <TickerSelector
+          tickers={tickers}
+          selectedTicker={selectedTicker}
+          onSelect={setSelectedTicker}
           onToggleRead={handleToggleRead}
           readStatus={readStatus}
         />
       </header>
-      
+
       {/* Main Chart Area */}
       <main className="flex-1 flex flex-col min-h-0 bg-[#050507]">
-        <ChartView 
-          ticker={selectedTicker} 
+        <ChartView
+          ticker={selectedTicker}
+          selectedIds={selectedIds}
+          onToggleTicker={toggleTicker}
           onPrev={handlePrev}
           onNext={handleNext}
         />
