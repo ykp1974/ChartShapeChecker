@@ -61,14 +61,20 @@ function App() {
   // スプシ保存
   const saveToSpreadsheet = async (ids) => {
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbwm6Yx7mMmEwnJ-HrjOn-Zsabd21wK6Ftpe-7gbj948rqWSVgf-8cm2KWIB5rcNzvE/exec';
-
     try {
-      await fetch(GAS_URL, {
+      const response = await fetch(GAS_URL, {
         method: 'POST',
-        mode: 'no-cors', // CORSエラー対策
-        headers: { 'Content-Type': 'application/json' },
+        // 'no-cors' を使うとレスポンスの中身が見えないため、
+        // CORS対応が可能なら外したほうがエラーハンドリングしやすいです
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        // ここを修正：GAS側が {selectedIds: ...} を求めているため、
+        // オブジェクトの中に配列を入れて送信します
         body: JSON.stringify({ selectedIds: ids }),
       });
+
       alert('スプレッドシートに保存しました！');
     } catch (error) {
       console.error('保存失敗:', error);
