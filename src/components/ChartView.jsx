@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { ExternalLink, RefreshCw, AlertCircle, Share2, ZoomIn, ImageOff, Maximize2, RotateCcw } from 'lucide-react';
+import { ExternalLink, RefreshCw, AlertCircle, Share2, ZoomIn, ImageOff, Maximize2, RotateCcw, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
-const ChartView = ({ ticker }) => {
+const ChartView = ({ ticker, onPrev, onNext }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
@@ -67,7 +67,27 @@ const ChartView = ({ ticker }) => {
       </div>
 
       {/* Image Display Area with Zoom-Pan-Pinch */}
-      <div className="flex-1 relative overflow-hidden bg-[#000]">
+      <div className="flex-1 relative overflow-hidden bg-[#000] group">
+        {/* Navigation Buttons */}
+        {ticker.id && (
+          <>
+            <button
+              onClick={onPrev}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-3 md:p-4 rounded-full bg-slate-900/40 hover:bg-slate-800/80 text-slate-300 hover:text-white border border-slate-700/30 hover:border-slate-500/50 hover:scale-105 active:scale-95 transition-all shadow-lg backdrop-blur-md md:opacity-0 md:group-hover:opacity-100 flex items-center justify-center cursor-pointer"
+              title="前の画像へ (←)"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <button
+              onClick={onNext}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-3 md:p-4 rounded-full bg-slate-900/40 hover:bg-slate-800/80 text-slate-300 hover:text-white border border-slate-700/30 hover:border-slate-500/50 hover:scale-105 active:scale-95 transition-all shadow-lg backdrop-blur-md md:opacity-0 md:group-hover:opacity-100 flex items-center justify-center cursor-pointer"
+              title="次の画像へ (→)"
+            >
+              <ChevronRight size={24} />
+            </button>
+          </>
+        )}
+
         <AnimatePresence mode="wait">
           {!ticker.id ? (
             <motion.div

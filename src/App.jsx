@@ -30,6 +30,44 @@ function App() {
     localStorage.setItem('chart_read_status', JSON.stringify(newStatus));
   };
 
+  const handlePrev = () => {
+    setSelectedTicker(prevTicker => {
+      if (tickers.length === 0) return prevTicker;
+      const currentIndex = tickers.findIndex(t => t.symbol === prevTicker?.symbol);
+      if (currentIndex === -1) return tickers[0];
+      const prevIndex = (currentIndex - 1 + tickers.length) % tickers.length;
+      return tickers[prevIndex];
+    });
+  };
+
+  const handleNext = () => {
+    setSelectedTicker(prevTicker => {
+      if (tickers.length === 0) return prevTicker;
+      const currentIndex = tickers.findIndex(t => t.symbol === prevTicker?.symbol);
+      if (currentIndex === -1) return tickers[0];
+      const nextIndex = (currentIndex + 1) % tickers.length;
+      return tickers[nextIndex];
+    });
+  };
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+        return;
+      }
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        handlePrev();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        handleNext();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden text-slate-100 selection:bg-blue-500/30">
       {/* Navbar with Ticker Selector */}
@@ -45,7 +83,11 @@ function App() {
       
       {/* Main Chart Area */}
       <main className="flex-1 flex flex-col min-h-0 bg-[#050507]">
-        <ChartView ticker={selectedTicker} />
+        <ChartView 
+          ticker={selectedTicker} 
+          onPrev={handlePrev}
+          onNext={handleNext}
+        />
       </main>
     </div>
   );
