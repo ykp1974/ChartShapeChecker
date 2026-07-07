@@ -60,7 +60,7 @@ function App() {
 
   // スプシ保存
   const saveToSpreadsheet = async (ids) => {
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbzTpAQfnuQ1-okJR7hPPTpyYcT6QvXzpBxydRnsF-o1IroEC1TfxSyhz1gtDa8cQk8/exec';
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbwm6Yx7mMmEwnJ-HrjOn-Zsabd21wK6Ftpe-7gbj948rqWSVgf-8cm2KWIB5rcNzvE/exec';
 
     try {
       await fetch(GAS_URL, {
