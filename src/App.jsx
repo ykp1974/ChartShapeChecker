@@ -123,6 +123,15 @@ function App() {
           onToggleRead={handleToggleRead}
           readStatus={readStatus}
         />
+        {/* リンクを追加 */}
+        <a
+          href="https://decisionlogger.netlify.app/"
+          target="_blank"
+          rel="noreferrer"
+          className="ml-4 px-3 py-1.5 text-xs font-medium bg-[#16161a] border border-[#2d2d35] rounded-lg text-slate-300 hover:text-white hover:border-blue-500/50 transition-all"
+        >
+          ログ
+        </a>
       </header>
 
       {/* Main Chart Area */}
