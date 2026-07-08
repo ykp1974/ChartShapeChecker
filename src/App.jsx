@@ -67,7 +67,7 @@ function App() {
       name: t.name
     }));
 
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxpjacwb5rW7wTEu2xRU_23lCxeJ5uukyjUI6fXNz2qKKxhGGTsM6DrO-91ICBPers/exec';
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxQjnJNxlkmllQFcGctZXtpIRA9xtxAsPYEg7Bh_4myblSjcZxcbqhFE0Vt7YiImb8/exec';
 
     try {
       await fetch(GAS_URL, {
