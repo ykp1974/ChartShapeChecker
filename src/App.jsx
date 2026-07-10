@@ -60,23 +60,22 @@ function App() {
 
   // スプシ保存
   const saveToSpreadsheet = async (ids) => {
-    // 選択された全銘柄の詳細情報を特定する必要があります
-    // selectedIds (IDの配列) を元に、tickersデータから名前などを取得
     const selectedTickerDetails = tickers.filter(t => selectedIds.includes(t.id)).map(t => ({
       symbol: t.symbol,
       name: t.name
     }));
 
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbzmP2QqAl1TPwJfpUyBJFciOSiZ8WTq2aIfym_woR0icQXjO4zoorEjuTIwvMn6p_w/exec';
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbwd-Se_PTovH7MixeNWmDa_1rvAtD7lCwS08YoVMG8wrkV8kSVyYfPV4ljOguZUP3A/exec'; // URLは維持
 
     try {
-      await fetch(GAS_URL, {
+      const response = await fetch(GAS_URL, {
         method: 'POST',
-        mode: 'no-cors',
+        mode: 'cors', // no-cors ではなく cors に変更
         headers: { 'Content-Type': 'application/json' },
-        // 配列全体をオブジェクトとして送信
         body: JSON.stringify({ tickers: selectedTickerDetails }),
       });
+
+      if (!response.ok) throw new Error('通信エラー');
       alert('銘柄リストを保存しました！');
     } catch (error) {
       console.error('保存失敗:', error);
