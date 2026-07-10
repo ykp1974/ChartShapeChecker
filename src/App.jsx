@@ -60,7 +60,7 @@ function App() {
 
   // スプシ保存
   const saveToSpreadsheet = async (ids) => {
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbw_MTAfjaEWA66Q0IYqZNOeTia1K1iqSjJuUfH6X262gkI8ERXJSlEuQ2I6y_g90R8/exec';
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbzSHoLhCVuju7lJkaMoXNawVSnd8cxnEX-HNUemfh0dEqumXJQrHJZ69P5heX5fGJw/exec';
 
     // 1. 選択されたIDリストから、全データを抽出
     const selectedTickerDetails = tickers.filter(t => selectedIds.includes(t.id)).map(t => ({
