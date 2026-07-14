@@ -74,7 +74,10 @@ function App() {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tickers: selectedTickerDetails }), // 銘柄詳細リストを送信
+        body: JSON.stringify({
+          tickers: selectedTickerDetails,
+          source: 'ChartShapeChecker'
+        }),
       });
       alert('スプレッドシートに同期しました！');
     } catch (error) {
