@@ -60,7 +60,7 @@ function App() {
 
   // スプシ保存->ChartShapeCheckerGAS
   const saveToSpreadsheet = async (ids) => {
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxjvE-znfarx-wnl5-V_Sk4edbnCItNw4jnef-8nF3TR0kttjWzfxESTjVmRKNoyo1q/exec';
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbwopTVqtfpFlCMv0F1jUFwNOzlO3wz4PtieC-_KGUNjquSSCewkrI0Dy1rJSwqtYcU9/exec';
 
     // 1. 選択されたIDリストから、全データを抽出
     const selectedTickerDetails = tickers.filter(t => selectedIds.includes(t.id)).map(t => ({
