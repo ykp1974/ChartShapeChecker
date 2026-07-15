@@ -64,9 +64,9 @@ function App() {
 
     // 1. 選択されたIDリストから、全データを抽出
     const selectedTickerDetails = tickers.filter(t => selectedIds.includes(t.id)).map(t => ({
-      id: t.id,
-      symbol: t.symbol,
-      name: t.name
+      symbol: t.symbol, // A列用
+      name: t.name,     // B列用
+      ticker: t.symbol.slice(-4) // C列用
     }));
 
     try {
