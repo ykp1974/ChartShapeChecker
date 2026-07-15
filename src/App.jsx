@@ -61,13 +61,26 @@ function App() {
   // スプシ保存->DecisionLoggerGAS
   const saveToSpreadsheet = async (ids) => {
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbwhlZbrfwxRe3jhHTz1vI8I4Vj__9nauHZtOlqImwcMQwobgVfj_fXCUqblhn7aRAT7/exec';
-    console.log('selectedIds==>' + selectedIds);
+
     // 1. 選択されたIDリストから、全データを抽出
-    const selectedTickerDetails = tickers.filter(t => selectedIds.includes(t.id)).map(t => ({
-      symbol: t.symbol, // A列用
-      name: t.name,     // B列用
-      ticker: t.symbol.slice(-4) // C列用
-    }));
+    const selectedTickerDetails = tickers
+      .filter(t => selectedIds.includes(t.id))
+      .map(t => {
+        // ★ここが重要：文字列から情報を分解するロジック
+        // 例: "[w]1723 日本電技"
+        // 1. まず末尾4桁をティッカーとして取り出す
+        const ticker = t.symbol.slice(-4);
+        // 2. 残りを銘柄名として扱う (ここでは簡易的に name をそのまま使うか、調整が必要ならここで処理)
+        const name = t.name;
+        // 3. 画面表示用の [w]... を symbol としてA列に送る
+        const displaySymbol = t.symbol;
+
+        return {
+          symbol: displaySymbol, // A列: [w]1723...
+          name: name,            // B列: 日本電技
+          ticker: ticker         // C列: 1723
+        };
+      });
 
     try {
       const response = await fetch(GAS_URL, {
