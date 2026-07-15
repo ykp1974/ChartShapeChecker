@@ -60,7 +60,7 @@ function App() {
 
   // スプシ保存->DecisionLoggerGAS
   const saveToSpreadsheet = async (ids) => {
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbw1t71cMPEPQO2VL_w8SmCgyThtJk2OgldVyO-7GgPKMJgcmw8vsFxXgRjNqS7H31tx/exec';
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbwhlZbrfwxRe3jhHTz1vI8I4Vj__9nauHZtOlqImwcMQwobgVfj_fXCUqblhn7aRAT7/exec';
 
     // 1. 選択されたIDリストから、全データを抽出
     const selectedTickerDetails = tickers.filter(t => selectedIds.includes(t.id)).map(t => ({
