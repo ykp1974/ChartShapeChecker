@@ -58,9 +58,9 @@ function App() {
     });
   };
 
-  // スプシ保存->ChartShapeCheckerGAS
+  // スプシ保存->DecisionLoggerGAS
   const saveToSpreadsheet = async (ids) => {
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbwopTVqtfpFlCMv0F1jUFwNOzlO3wz4PtieC-_KGUNjquSSCewkrI0Dy1rJSwqtYcU9/exec';
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbw1t71cMPEPQO2VL_w8SmCgyThtJk2OgldVyO-7GgPKMJgcmw8vsFxXgRjNqS7H31tx/exec';
 
     // 1. 選択されたIDリストから、全データを抽出
     const selectedTickerDetails = tickers.filter(t => selectedIds.includes(t.id)).map(t => ({
