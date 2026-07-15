@@ -7,6 +7,15 @@ const ChartView = ({ ticker, onPrev, onNext, selectedIds, onToggleTicker }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
+  const [toastMessage, setToastMessage] = useState(null); // ステート追加
+
+  const handleShowPatterns = () => {
+    const allMessages = [
+      "[kh]急落後の反騰", "[ho]初押し", "[si]三手大陰線",
+      "[si]最後の抱き陰線", "[ii]陰の陰はらみ", "[w] Wボトム、逆三尊"
+    ].join('\n');
+    setToastMessage(allMessages);
+  };
 
   useEffect(() => {
     if (ticker?.id) {
@@ -59,6 +68,12 @@ const ChartView = ({ ticker, onPrev, onNext, selectedIds, onToggleTicker }) => {
         </div>
 
         <div className="flex gap-2 ml-4">
+          <button
+            onClick={handleShowPatterns}
+            className="px-3 py-1 text-xs rounded-md bg-[#2d2d35] text-slate-400 hover:text-white border border-[#3f3f4a]"
+          >
+            パターン表示
+          </button>
           {ticker.id && (
             <a
               href={getExternalUrl(ticker.id)}
@@ -186,8 +201,26 @@ const ChartView = ({ ticker, onPrev, onNext, selectedIds, onToggleTicker }) => {
           )}
         </AnimatePresence>
       </div>
+      {/* トースト表示 */}
+      {toastMessage && <Toast message={toastMessage} onClose={() => setToastMessage(null)} />}
     </div>
   );
 };
+const Toast = ({ message, onClose }) => {
+  useEffect(() => {
+    const timer = setTimeout(onClose, 5000); // 5秒間表示
+    return () => clearTimeout(timer);
+  }, [onClose]);
 
+  return (
+    <div style={{
+      position: 'fixed', bottom: '20px', left: '20px', padding: '15px 25px',
+      backgroundColor: '#16161a', color: '#e2e8f0', borderRadius: '12px',
+      zIndex: 9999, border: '1px solid #2d2d35', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.5)',
+      whiteSpace: 'pre-wrap', fontSize: '14px', lineHeight: '1.6'
+    }}>
+      {message}
+    </div>
+  );
+};
 export default ChartView;
