@@ -65,20 +65,23 @@ function App() {
     const selectedTickerDetails = tickers
       .filter(t => selectedIds.includes(t.id))
       .map(t => {
-        // [si]7545_T_西松屋チェーン_chart.png
-        // 1. まず [xxx] 部分を除去した文字列を取得
+        // 先頭の [ から ] までをマッチさせます
+        const match = t.symbol.match(/^\[.*?\]/);
+        const symbolOnly = match ? match[0] : "";
+
+        // まず [xxx] 部分を除去した文字列を取得
         const cleanName = t.symbol.replace(/^\[.*?\]/, '');
 
-        // 2. _ で分割して、先頭の4桁数字を取り出す
+        // _ で分割して、先頭の4桁数字を取り出す
         const parts = cleanName.split('_');
         const ticker = parts[0]; // 分割した配列の1番目が必ず4桁数字になるはず
 
-        // 3. name（銘柄名）がうまく抽出できない場合も考慮
+        // name（銘柄名）がうまく抽出できない場合も考慮
         const name = t.name;
 
         return {
-          symbol: t.symbol, // A列: [si]7545_T_西松屋チェーン_chart.png
-          name: name,       // B列: 西松屋チェーン
+          symbol: symbolOnly, // A列: [si]
+          name: name,       // B列: 西X屋チェーン
           ticker: ticker    // C列: 7545
         };
       });
