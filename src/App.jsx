@@ -66,7 +66,6 @@ function App() {
       .filter(t => selectedIds.includes(t.id))
       .map(t => {
         // [si]7545_T_西松屋チェーン_chart.png
-        const symbolOnly = t.symbol.match(/^\[.*?\]/)?.[0] || "";
         // [xxx] 部分を除去した文字列を取得
         const cleanName = t.symbol.replace(/^\[.*?\]/, '');
 
@@ -76,6 +75,7 @@ function App() {
 
         // name（銘柄名）がうまく抽出できない場合も考慮
         const name = t.name;
+        const symbolOnly = t.symbol.match(/^\[.*?\]/)?.[0] || "";
 
         return {
           symbol: symbolOnly, // A列: [si]7545_T_西松屋チェーン_chart.png
