@@ -67,10 +67,12 @@ function App() {
       .map(t => {
         // [si]7545_T_西松屋チェーン_chart.png
         // 1. まず [xxx] 部分を除去した文字列を取得
+        console.log("変換前のsymbol:", t.symbol);
         const cleanName = t.symbol.replace(/^\[.*?\]/, '');
-
+        console.log("除去後:", cleanName);
         // 2. _ で分割して、先頭の4桁数字を取り出す
         const parts = cleanName.split('_');
+        console.log("分割結果:", parts);
         const ticker = parts[0]; // 分割した配列の1番目が必ず4桁数字になるはず
 
         // 3. name（銘柄名）がうまく抽出できない場合も考慮
