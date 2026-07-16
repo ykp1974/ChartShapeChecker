@@ -62,26 +62,24 @@ function App() {
   const saveToSpreadsheet = async (ids) => {
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbwhlZbrfwxRe3jhHTz1vI8I4Vj__9nauHZtOlqImwcMQwobgVfj_fXCUqblhn7aRAT7/exec';
 
-    // 1. 選択されたIDリストから、全データを抽出
     const selectedTickerDetails = tickers
       .filter(t => selectedIds.includes(t.id))
       .map(t => {
-        console.log('t.id=>' + t.id);
-        console.log('t.name=>' + t.name);
-        console.log('t.symbol=>' + t.symbol);
-        // ★ここが重要：文字列から情報を分解するロジック
-        // 例: "[w]1723 日本電技"
-        // 1. まず末尾4桁をティッカーとして取り出す
-        const ticker = t.symbol.slice(-4);
-        // 2. 残りを銘柄名として扱う (ここでは簡易的に name をそのまま使うか、調整が必要ならここで処理)
+        // [si]7545_T_西松屋チェーン_chart.png
+        // 1. まず [xxx] 部分を除去した文字列を取得
+        const cleanName = t.symbol.replace(/^\[.*?\]/, '');
+
+        // 2. _ で分割して、先頭の4桁数字を取り出す
+        const parts = cleanName.split('_');
+        const ticker = parts[0]; // 分割した配列の1番目が必ず4桁数字になるはず
+
+        // 3. name（銘柄名）がうまく抽出できない場合も考慮
         const name = t.name;
-        // 3. 画面表示用の [w]... を symbol としてA列に送る
-        const displaySymbol = t.symbol;
 
         return {
-          symbol: displaySymbol, // A列: [w]1723...
-          name: name,            // B列: 日本電技
-          ticker: ticker         // C列: 1723
+          symbol: t.symbol, // A列: [si]7545_T_西松屋チェーン_chart.png
+          name: name,       // B列: 西松屋チェーン
+          ticker: ticker    // C列: 7545
         };
       });
 
