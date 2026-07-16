@@ -66,7 +66,9 @@ function App() {
     const selectedTickerDetails = tickers
       .filter(t => selectedIds.includes(t.id))
       .map(t => {
-        console.log('t=>' + t);
+        console.log('t.id=>' + t.id);
+        console.log('t.name=>' + t.name);
+        console.log('t.symbol=>' + t.symbol);
         // ★ここが重要：文字列から情報を分解するロジック
         // 例: "[w]1723 日本電技"
         // 1. まず末尾4桁をティッカーとして取り出す
