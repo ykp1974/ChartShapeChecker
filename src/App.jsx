@@ -137,7 +137,6 @@ function App() {
     <div className="flex flex-col h-screen w-screen overflow-hidden text-slate-100 selection:bg-blue-500/30">
       {/* Navbar with Ticker Selector */}
       <header className="app-header">
-        {/* リセットボタンを追加 */}
         <button
           onClick={handleResetSelection}
           className="mr-2 px-3 py-1.5 text-xs font-medium bg-[#16161a] border border-[#2d2d35] rounded-lg text-slate-400 hover:text-red-400 hover:border-red-500/50 transition-all"
