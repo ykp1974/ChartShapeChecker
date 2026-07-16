@@ -45,4 +45,20 @@ describe('Sidebar', () => {
       expect(screen.queryByText('GOOGL')).not.toBeInTheDocument();
     });
   });
+
+  it('calls onSelect when a ticker is clicked', () => {
+    const handleSelect = vi.fn();
+    render(
+      <Sidebar
+        tickers={mockTickers}
+        selectedTicker={mockTickers[0]}
+        onSelect={handleSelect}
+        onToggleRead={() => {}}
+        readStatus={{}}
+      />
+    );
+    const item = screen.getByText('AMZN');
+    fireEvent.click(item);
+    expect(handleSelect).toHaveBeenCalledWith(mockTickers[1]);
+  });
 });

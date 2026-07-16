@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import ChartView from './ChartView';
 
 describe('ChartView', () => {
@@ -13,7 +13,6 @@ describe('ChartView', () => {
         onToggleTicker={() => {}}
       />
     );
-    
     expect(screen.getByText('銘柄を選択してチャートを表示します。')).toBeInTheDocument();
   });
 
@@ -28,7 +27,30 @@ describe('ChartView', () => {
         onToggleTicker={() => {}}
       />
     );
-    
     expect(screen.getByText('ID 未設定')).toBeInTheDocument();
+  });
+
+  it('renders image and handles Toast display', async () => {
+    const tickerWithId = { symbol: 'TEST', name: 'Test Name', market: 'TSE', id: 'fake-id' };
+    render(
+      <ChartView
+        ticker={tickerWithId}
+        onPrev={() => {}}
+        onNext={() => {}}
+        selectedIds={[]}
+        onToggleTicker={() => {}}
+      />
+    );
+    
+    // Check if the image starts rendering with the correct src containing the id
+    const img = document.querySelector('img');
+    expect(img.src).toContain('fake-id');
+
+    // Check Toast
+    const patternBtn = screen.getByText('パターン表示');
+    fireEvent.click(patternBtn);
+
+    // Toast content check
+    expect(screen.getByText(/\[kh\]急落後の反騰/)).toBeInTheDocument();
   });
 });
