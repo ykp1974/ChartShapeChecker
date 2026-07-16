@@ -65,22 +65,22 @@ function App() {
     const selectedTickerDetails = tickers
       .filter(t => selectedIds.includes(t.id))
       .map(t => {
-        // [si]7545_T_西松屋チェーン_chart.png
-        // [xxx] 部分を除去した文字列を取得
-        const cleanName = t.symbol.replace(/^\[.*?\]/, '');
-
-        // _ で分割して、先頭の4桁数字を取り出す
-        const parts = cleanName.split('_');
-        const ticker = parts[0]; // 分割した配列の1番目が必ず4桁数字になるはず
-
-        // name（銘柄名）がうまく抽出できない場合も考慮
-        const name = t.name;
+        // A列: 識別子だけを抽出 ([si] など)
         const symbolOnly = t.symbol.match(/^\[.*?\]/)?.[0] || "";
 
+        // B列: 元々の名前
+        const name = t.name;
+
+        // C列: ティッカーを確実に抽出
+        // [si]7545_... なら 7545 を抜き出す
+        const cleanName = t.symbol.replace(/^\[.*?\]/, '');
+        const ticker = cleanName.split('_')[0];
+
+        // 2. 最後に、定義した変数のみを返す
         return {
-          symbol: symbolOnly, // A列: [si]7545_T_西松屋チェーン_chart.png
-          name: name,       // B列: 西松屋チェーン
-          ticker: ticker    // C列: 7545
+          symbol: symbolOnly, // ここには [si] などだけが入る
+          name: name,         // ここには 大成建設 が入る
+          ticker: ticker      // ここには 1801 などが確実に入る
         };
       });
 
