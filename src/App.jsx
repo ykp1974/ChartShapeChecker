@@ -78,7 +78,7 @@ function App() {
         const name = t.name;
 
         return {
-          symbol: symbolOnly, // A列: [si]7545_T_西松屋チェーン_chart.png
+          symbol: t.symbol, // A列: [si]7545_T_西松屋チェーン_chart.png
           name: name,       // B列: 西松屋チェーン
           ticker: ticker    // C列: 7545
         };
