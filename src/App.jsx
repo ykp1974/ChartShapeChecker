@@ -65,20 +65,16 @@ function App() {
     const selectedTickerDetails = tickers
       .filter(t => selectedIds.includes(t.id))
       .map(t => {
-        // 1. 識別文字（[si]など）を抽出
-        const match = t.symbol.match(/^\[.*?\]/);
-        const symbolOnly = match ? match[0] : "";
-
-        // 2. ティッカー（4桁数字）を抽出するロジック
-        // 命名規則: [si]7545_T_...
-        // 識別文字を除去して、'_' で分割した最初の要素を取得
+        // [si]7545_T_西松屋チェーン_chart.png
+        // 1. まず [xxx] 部分を除去した文字列を取得
         const cleanName = t.symbol.replace(/^\[.*?\]/, '');
-        const ticker = cleanName.split('_')[0];
 
-        // 念のための安全策: もし抽出結果が4桁でない場合はログに出す
-        if (!/^\d{4}$/.test(ticker)) {
-          console.warn(`ティッカー抽出失敗: ${t.symbol} -> ${ticker}`);
-        }
+        // 2. _ で分割して、先頭の4桁数字を取り出す
+        const parts = cleanName.split('_');
+        const ticker = parts[0]; // 分割した配列の1番目が必ず4桁数字になるはず
+
+        // 3. name（銘柄名）がうまく抽出できない場合も考慮
+        const name = t.name;
 
         return {
           symbol: t.symbol, // A列: [si]7545_T_西松屋チェーン_chart.png
