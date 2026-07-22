@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ExternalLink, RefreshCw, AlertCircle, Share2, ZoomIn, ImageOff, Maximize2, RotateCcw, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { DRIVE_URLS } from '../config/constants';
 
 const ChartView = ({ ticker, onPrev, onNext, selectedIds, onToggleTicker }) => {
   const [loading, setLoading] = useState(true);
@@ -29,11 +30,11 @@ const ChartView = ({ ticker, onPrev, onNext, selectedIds, onToggleTicker }) => {
   }, [ticker]);
 
   const getImageUrl = (id, retry) => {
-    if (retry === 1) return `https://lh3.googleusercontent.com/u/0/d/${id}`;
-    return `https://drive.google.com/thumbnail?id=${id}&sz=w2500`;
+    if (retry === 1) return DRIVE_URLS.FALLBACK(id);
+    return DRIVE_URLS.THUMBNAIL(id);
   };
 
-  const getExternalUrl = (id) => `https://drive.google.com/file/d/${id}/view`;
+  const getExternalUrl = (id) => DRIVE_URLS.PREVIEW(id);
 
   if (!ticker) {
     return (

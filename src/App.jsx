@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TickerSelector from './components/TickerSelector';
 import ChartView from './components/ChartView';
 import { tickers } from './data/tickers';
+import { syncTickersToSpreadsheet } from './services/gasApi';
 
 function App() {
   const [selectedTicker, setSelectedTicker] = useState(null);
@@ -60,8 +61,6 @@ function App() {
 
   // スプシ保存->DecisionLoggerGAS
   const saveToSpreadsheet = async (ids) => {
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbwhlZbrfwxRe3jhHTz1vI8I4Vj__9nauHZtOlqImwcMQwobgVfj_fXCUqblhn7aRAT7/exec';
-
     const selectedTickerDetails = tickers
       .filter(t => selectedIds.includes(t.id))
       .map(t => {
@@ -84,15 +83,7 @@ function App() {
       });
 
     try {
-      const response = await fetch(GAS_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          tickers: selectedTickerDetails,
-          source: 'ChartShapeChecker'
-        }),
-      });
+      await syncTickersToSpreadsheet(selectedTickerDetails);
       alert('スプレッドシートに同期しました！');
     } catch (error) {
       console.error('保存失敗:', error);
