@@ -1,63 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import TickerSelector from './components/TickerSelector';
 import ChartView from './components/ChartView';
 import { tickers } from './data/tickers';
 import { syncTickersToSpreadsheet } from './services/gasApi';
+import { useTickerState } from './hooks/useTickerState';
 
 function App() {
-  const [selectedTicker, setSelectedTicker] = useState(null);
-  const [readStatus, setReadStatus] = useState({});
-  const [selectedIds, setSelectedIds] = useState([]);
-
-  // 2. 切り替え関数
-  const toggleTicker = (id) => {
-    setSelectedIds(prev =>
-      prev.includes(id) ? prev.filter(t => t !== id) : [...prev, id]
-    );
-  };
-
-  // Load read status from local storage
-  useEffect(() => {
-    const savedStatus = localStorage.getItem('chart_read_status');
-    if (savedStatus) {
-      try {
-        setReadStatus(JSON.parse(savedStatus));
-      } catch (e) {
-        console.error("Failed to load read status", e);
-      }
-    }
-
-    // Select first ticker by default
-    if (tickers.length > 0) {
-      setSelectedTicker(tickers[0]);
-    }
-  }, []);
-
-  const handleToggleRead = (symbol) => {
-    const newStatus = { ...readStatus, [symbol]: !readStatus[symbol] };
-    setReadStatus(newStatus);
-    localStorage.setItem('chart_read_status', JSON.stringify(newStatus));
-  };
-
-  const handlePrev = () => {
-    setSelectedTicker(prevTicker => {
-      if (tickers.length === 0) return prevTicker;
-      const currentIndex = tickers.findIndex(t => t.symbol === prevTicker?.symbol);
-      if (currentIndex === -1) return tickers[0];
-      const prevIndex = (currentIndex - 1 + tickers.length) % tickers.length;
-      return tickers[prevIndex];
-    });
-  };
-
-  const handleNext = () => {
-    setSelectedTicker(prevTicker => {
-      if (tickers.length === 0) return prevTicker;
-      const currentIndex = tickers.findIndex(t => t.symbol === prevTicker?.symbol);
-      if (currentIndex === -1) return tickers[0];
-      const nextIndex = (currentIndex + 1) % tickers.length;
-      return tickers[nextIndex];
-    });
-  };
+  const {
+    selectedTicker,
+    setSelectedTicker,
+    readStatus,
+    selectedIds,
+    toggleTicker,
+    handleToggleRead,
+    handlePrev,
+    handleNext,
+    handleResetSelection
+  } = useTickerState();
 
   // スプシ保存->DecisionLoggerGAS
   const saveToSpreadsheet = async (ids) => {
@@ -90,11 +49,6 @@ function App() {
     }
   };
 
-  // 選択リセット関数 
-  const handleResetSelection = () => {
-    setSelectedIds([]);
-  };
-
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -111,18 +65,7 @@ function App() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
-
-  // LocalStorageからselected_ticker_idsを読み込む
-  useEffect(() => {
-    const saved = localStorage.getItem('selected_ticker_ids');
-    if (saved) setSelectedIds(JSON.parse(saved));
-  }, []);
-
-  // LocalStorageにselected_ticker_idsを保存する
-  useEffect(() => {
-    localStorage.setItem('selected_ticker_ids', JSON.stringify(selectedIds));
-  }, [selectedIds]);
+  }, [handlePrev, handleNext]);
 
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden text-slate-100 selection:bg-blue-500/30">
