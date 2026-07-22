@@ -53,4 +53,22 @@ describe('ChartView', () => {
     // Toast content check
     expect(screen.getByText(/\[kh\]急落後の反騰/)).toBeInTheDocument();
   });
+
+  it('calls onToggleTicker when the checkbox in header is clicked', () => {
+    const handleToggleTicker = vi.fn();
+    const tickerWithId = { symbol: 'TEST', name: 'Test Name', market: 'TSE', id: 'fake-id' };
+    render(
+      <ChartView
+        ticker={tickerWithId}
+        onPrev={() => {}}
+        onNext={() => {}}
+        selectedIds={[]}
+        onToggleTicker={handleToggleTicker}
+      />
+    );
+
+    const checkbox = screen.getByRole('checkbox');
+    fireEvent.click(checkbox);
+    expect(handleToggleTicker).toHaveBeenCalledWith('fake-id');
+  });
 });

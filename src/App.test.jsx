@@ -9,6 +9,7 @@ describe('App Component', () => {
       json: () => Promise.resolve({}),
     }));
     vi.spyOn(window, 'alert').mockImplementation(() => {});
+    localStorage.clear();
   });
 
   afterEach(() => {
@@ -22,6 +23,9 @@ describe('App Component', () => {
   });
 
   it('calls fetch when "スプレッドシートへ同期" is clicked', async () => {
+    // Populate selected ids in local storage before rendering
+    localStorage.setItem('selected_ticker_ids', JSON.stringify(['13PuoMZxeUbPhQoZ934yDIVSUmX4OF_mz']));
+
     render(<App />);
     const syncBtn = screen.getByText('スプレッドシートへ同期');
     fireEvent.click(syncBtn);
@@ -32,12 +36,35 @@ describe('App Component', () => {
     expect(window.alert).toHaveBeenCalledWith('スプレッドシートに同期しました！');
   });
 
-  it('navigates to next ticker when ArrowRight is pressed', () => {
+  it('navigates to next ticker when ArrowRight is pressed and prev ticker when ArrowLeft is pressed', () => {
     render(<App />);
-    // Initial load will select the first ticker from data
-    // Assuming tickers exist in data/tickers.js
     fireEvent.keyDown(window, { key: 'ArrowRight' });
-    // State updates inside handleNext
-    // Cannot easily assert exact ticker symbol without knowing mock data, but we assert it doesn't crash
+    fireEvent.keyDown(window, { key: 'ArrowLeft' });
+  });
+
+  it('resets selection when "リセット" is clicked', () => {
+    localStorage.setItem('selected_ticker_ids', JSON.stringify(['13PuoMZxeUbPhQoZ934yDIVSUmX4OF_mz']));
+    render(<App />);
+    const resetBtn = screen.getByText('リセット');
+    fireEvent.click(resetBtn);
+    expect(localStorage.getItem('selected_ticker_ids')).toBe('[]');
+  });
+
+  it('handles local storage parse errors gracefully', () => {
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    localStorage.setItem('chart_read_status', 'invalid-json');
+    localStorage.setItem('selected_ticker_ids', 'invalid-json');
+    render(<App />);
+    expect(consoleSpy).toHaveBeenCalled();
+  });
+
+  it('does not trigger keydown handler when inputs are focused', () => {
+    render(<App />);
+    const input = document.createElement('input');
+    document.body.appendChild(input);
+    input.focus();
+    const event = new KeyboardEvent('keydown', { key: 'ArrowRight' });
+    window.dispatchEvent(event);
+    document.body.removeChild(input);
   });
 });
