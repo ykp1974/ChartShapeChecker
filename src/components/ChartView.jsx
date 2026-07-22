@@ -3,6 +3,7 @@ import { ExternalLink, RefreshCw, AlertCircle, Share2, ZoomIn, ImageOff, Maximiz
 import { motion, AnimatePresence } from 'framer-motion';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { DRIVE_URLS } from '../config/constants';
+import Toast from './common/Toast';
 
 const ChartView = ({ ticker, onPrev, onNext, selectedIds, onToggleTicker }) => {
   const [loading, setLoading] = useState(true);
@@ -207,21 +208,5 @@ const ChartView = ({ ticker, onPrev, onNext, selectedIds, onToggleTicker }) => {
     </div>
   );
 };
-const Toast = ({ message, onClose }) => {
-  useEffect(() => {
-    const timer = setTimeout(onClose, 5000); // 5秒間表示
-    return () => clearTimeout(timer);
-  }, [onClose]);
 
-  return (
-    <div style={{
-      position: 'fixed', bottom: '20px', left: '20px', padding: '15px 25px',
-      backgroundColor: '#16161a', color: '#e2e8f0', borderRadius: '12px',
-      zIndex: 9999, border: '1px solid #2d2d35', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.5)',
-      whiteSpace: 'pre-wrap', fontSize: '14px', lineHeight: '1.6'
-    }}>
-      {message}
-    </div>
-  );
-};
 export default ChartView;
