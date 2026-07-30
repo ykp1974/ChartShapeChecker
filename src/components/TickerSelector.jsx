@@ -23,7 +23,7 @@ const TickerSelector = ({ tickers, selectedTicker, onSelect, onToggleRead, readS
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // フィルタリングロジックの修正
+  // フィルタリングロジック
   const filteredTickers = tickers.filter(ticker => {
     const query = normalizeText(searchTerm);
     const name = normalizeText(ticker.name);
