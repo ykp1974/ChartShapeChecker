@@ -2,6 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown, Search, CheckCircle2, Circle, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// 全角半角・大文字小文字の表記揺れを吸収するヘルパー関数
+const normalizeText = (text) => {
+  if (!text) return '';
+  return text.normalize('NFKC').toLowerCase();
+};
+
 const TickerSelector = ({ tickers, selectedTicker, onSelect, onToggleRead, readStatus }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -17,18 +23,13 @@ const TickerSelector = ({ tickers, selectedTicker, onSelect, onToggleRead, readS
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // const filteredTickers = tickers.filter(t => 
-  //   t.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //   t.name.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
-
-  // 修正後（全角半角の表記揺れを吸収）
+  // フィルタリングロジックの修正
   const filteredTickers = tickers.filter(ticker => {
-    const normalizedQuery = normalizeText(searchQuery);
-    const normalizedName = normalizeText(ticker.name);
-    const normalizedCode = normalizeText(ticker.code);
+    const query = normalizeText(searchTerm);
+    const name = normalizeText(ticker.name);
+    const symbol = normalizeText(ticker.symbol);
 
-    return normalizedName.includes(normalizedQuery) || normalizedCode.includes(normalizedQuery);
+    return name.includes(query) || symbol.includes(query);
   });
 
   return (
