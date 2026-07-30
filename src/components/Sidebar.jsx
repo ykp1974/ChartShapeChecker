@@ -5,18 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 const Sidebar = ({ tickers, selectedTicker, onSelect, onToggleRead, readStatus }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  // const filteredTickers = tickers.filter(t => 
-  //   t.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //   t.name.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
-  // 修正後（全角半角の表記揺れを吸収）
-  const filteredTickers = tickers.filter(ticker => {
-    const normalizedQuery = normalizeText(searchQuery);
-    const normalizedName = normalizeText(ticker.name);
-    const normalizedCode = normalizeText(ticker.code);
-
-    return normalizedName.includes(normalizedQuery) || normalizedCode.includes(normalizedQuery);
-  });
+  const filteredTickers = tickers.filter(t =>
+    t.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    t.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="w-[320px] h-screen flex flex-col glass border-r bg-[#0d0d0f]" style={{ width: '320px', borderRight: '1px solid #2d2d35' }}>

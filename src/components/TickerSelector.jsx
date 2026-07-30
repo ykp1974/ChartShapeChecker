@@ -17,15 +17,24 @@ const TickerSelector = ({ tickers, selectedTicker, onSelect, onToggleRead, readS
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const filteredTickers = tickers.filter(t => 
-    t.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    t.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredTickers = tickers.filter(t => 
+  //   t.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //   t.name.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
+
+  // 修正後（全角半角の表記揺れを吸収）
+  const filteredTickers = tickers.filter(ticker => {
+    const normalizedQuery = normalizeText(searchQuery);
+    const normalizedName = normalizeText(ticker.name);
+    const normalizedCode = normalizeText(ticker.code);
+
+    return normalizedName.includes(normalizedQuery) || normalizedCode.includes(normalizedQuery);
+  });
 
   return (
     <div className="selector-container" ref={dropdownRef}>
       {/* Trigger Button */}
-      <button 
+      <button
         className={`selector-trigger ${isOpen ? 'active' : ''}`}
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -39,7 +48,7 @@ const TickerSelector = ({ tickers, selectedTicker, onSelect, onToggleRead, readS
       {/* Dropdown Menu */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -69,8 +78,8 @@ const TickerSelector = ({ tickers, selectedTicker, onSelect, onToggleRead, readS
             <div className="dropdown-list scrollbar-custom">
               {filteredTickers.length > 0 ? (
                 filteredTickers.map(ticker => (
-                  <div 
-                    key={ticker.symbol} 
+                  <div
+                    key={ticker.symbol}
                     className={`dropdown-item ${selectedTicker?.symbol === ticker.symbol ? 'active' : ''}`}
                     onClick={() => {
                       onSelect(ticker);
@@ -80,7 +89,7 @@ const TickerSelector = ({ tickers, selectedTicker, onSelect, onToggleRead, readS
                   >
                     <div className="ticker-symbol-badge">{ticker.symbol}</div>
                     <span className="flex-1 truncate">{ticker.name}</span>
-                    
+
                     <button
                       type="button"
                       className={`read-toggle ${readStatus[ticker.symbol] ? 'checked' : 'unchecked'}`}
