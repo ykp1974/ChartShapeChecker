@@ -1,3 +1,4 @@
+// GAS (Google Apps Script) API のエンドポイントURLや設定値
 export const GAS_URL = 'https://script.google.com/macros/s/AKfycbwhlZbrfwxRe3jhHTz1vI8I4Vj__9nauHZtOlqImwcMQwobgVfj_fXCUqblhn7aRAT7/exec';
 
 export const DRIVE_URLS = {
