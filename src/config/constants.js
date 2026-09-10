@@ -1,5 +1,5 @@
 // GAS (Google Apps Script) API のエンドポイントURLや設定値
-export const GAS_URL = 'https://script.google.com/macros/s/AKfycbwhlZbrfwxRe3jhHTz1vI8I4Vj__9nauHZtOlqImwcMQwobgVfj_fXCUqblhn7aRAT7/exec';
+export const GAS_URL = 'https://script.google.com/macros/s/AKfycbzTPAmD8FdmWWBlu9nKJ52PzrBw5lKzkvC-3wxwVJRkSz40qoOtPCA6A5tgMSKgSFQG/exec';
 
 export const DRIVE_URLS = {
   PREVIEW: (id) => `https://drive.google.com/file/d/${id}/view`,
