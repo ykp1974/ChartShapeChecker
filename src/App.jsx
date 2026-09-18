@@ -64,7 +64,8 @@ function App() {
         return {
           symbol: t.symbol, // A列: [si]7545_T_西松屋チェーン_chart.png
           name: name,       // B列: 西松屋チェーン
-          ticker: ticker    // C列: 7545
+          ticker: ticker,   // C列: 7545
+          quality_score: t.quality_score ?? null // ★ D列用: 初押し質スコアを追加
         };
       });
 
