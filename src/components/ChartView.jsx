@@ -113,10 +113,10 @@ const ChartView = ({ ticker, onPrev, onNext, selectedIds, onToggleTicker }) => {
             <span className="truncate">{ticker.name}</span>
             {/* ↑ 初押し質スコアバッジ */}
             <QualityScoreBadge
-              score={ticker.score}
+              score={ticker.quality_score}
               volScore={ticker.vol_score}
               depthScore={ticker.depth_score}
-              closePosScore={ticker.close_position_score}
+              closePosScore={ticker.close_pos_score}
             />
           </h2>
           <p className="text-[10px] text-slate-500 uppercase truncate">

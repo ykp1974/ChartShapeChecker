@@ -1,181 +1,453 @@
-/**
- * ==========================================
- * 銘柄データマスター (src/data/tickers.js)
- * ==========================================
- * 
- * 【このファイルの役割】
- * アプリ全体で使用する銘柄情報（銘柄コード・名称・市場区分など）が一括管理されています。
- * 
- * 【初学者が押さえるべきポイント：UIとデータの分離】
- * 見た目を決める画面コンポーネント（JSX）内に直接データを書き込むのではなく、
- * このように専用のファイルへ切り出すことで、銘柄の追加・編集が容易になり、
- * コードの再利用性と保守性（メンテナンスのしやすさ）が高まります。
- */
-
-/**
- * 銘柄リストのデータ構造（配列 × オブジェクト）
- * 
- * - [ ] (配列/Array): 複数の銘柄を順番に並べたリストです。
- * - { } (オブジェクト/Object): 1つの銘柄が持つ属性（コード、名称、市場など）をキーと値のペアで保持します。
- * 
- * ※ `export` キーワードを付けることで、他のファイル（コンポーネント）から
- *   `import { TICKERS } from '...'` の形式で呼び出して利用できるようになります。
- */
 export const tickers = [
   {
-    "symbol": "1356",
-    "market": "T",
-    "name": "ＴＯＰＩＸベア２倍上場投信",
-    "id": "13PuoMZxeUbPhQoZ934yDIVSUmX4OF_mz",
-    "filename": "1356_T_ＴＯＰＩＸベア２倍上場投信_chart.png"
-  },
-  {
-    "symbol": "1569",
-    "market": "T",
-    "name": "ＴＯＰＩＸベア上場投信",
-    "id": "14cCIpQ33DP0prwbCaMappiknZg0uxcdx",
-    "filename": "1569_T_ＴＯＰＩＸベア上場投信_chart.png"
-  },
-  {
-    "symbol": "2212",
+    "symbol": "[ho]2212",
     "market": "T",
     "name": "山崎製パン",
-    "id": "1zLj9X_JohdDYBCQSTvjKeSs25_iBEmZz",
-    "filename": "2212_T_山崎製パン_chart.png"
+    "id": "1EVqXlSh2vQsLuIiw9nRDzU-sgjAe_Zm4",
+    "filename": "[ho]2212_T_山崎製パン_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
   },
   {
-    "symbol": "2282",
+    "symbol": "[ho]2874",
     "market": "T",
-    "name": "日本ハム",
-    "id": "1ABK-8T_mNR3BF8bwQ7S2ZuvbxIakYsEq",
-    "filename": "2282_T_日本ハム_chart.png"
+    "name": "ヨコレイ",
+    "id": "1mEozwioyc0F8rvcLqN8E4nd76BYPFf2y",
+    "filename": "[ho]2874_T_ヨコレイ_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
   },
   {
-    "symbol": "2288",
+    "symbol": "[ho]3197",
     "market": "T",
-    "name": "丸大食品",
-    "id": "1iAH3i6InhLHyjRUMr28WAL4SqIKh_cIc",
-    "filename": "2288_T_丸大食品_chart.png"
+    "name": "すかいらーくホールディングス",
+    "id": "14txjKLJ10jVeplTe2M5xeSRy4YI0okV_",
+    "filename": "[ho]3197_T_すかいらーくホールディングス_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
   },
   {
-    "symbol": "2674",
+    "symbol": "[ho]4506",
     "market": "T",
-    "name": "ハードオフコーポレーション",
-    "id": "1unkwdHZgNedFvKMsnBrM0CM4vVkv1CSN",
-    "filename": "2674_T_ハードオフコーポレーション_chart.png"
+    "name": "住友ファーマ",
+    "id": "14st7CMp1TtbfdStQaUG_f2z9gV4b8D6V",
+    "filename": "[ho]4506_T_住友ファーマ_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
   },
   {
-    "symbol": "3387",
+    "symbol": "[ho]4661",
     "market": "T",
-    "name": "クリエイト・レストランツ・ホールディング",
-    "id": "1bR_f-dfIPoXaVY05svwBpu_5CaCRdLLe",
-    "filename": "3387_T_クリエイト・レストランツ・ホールディング_chart.png"
+    "name": "オリエンタルランド",
+    "id": "1Iqh0_ALHBtZfXRlDep3LBuyVZ-Alka5R",
+    "filename": "[ho]4661_T_オリエンタルランド_chart.png",
+    "quality_score": 0.448,
+    "vol_score": 0.439,
+    "depth_score": 0.373,
+    "close_pos_score": 0.536
   },
   {
-    "symbol": "3632",
+    "symbol": "[ho]5410",
     "market": "T",
-    "name": "グリーホールディングス",
-    "id": "1AcnL2rMvcBlFHDIcUsqPihLwZvVwmH3S",
-    "filename": "3632_T_グリーホールディングス_chart.png"
+    "name": "合同製鐵",
+    "id": "1q0hhXF9V1IN8T6QMK9rlfqP7LkE8ta3i",
+    "filename": "[ho]5410_T_合同製鐵_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
   },
   {
-    "symbol": "4072",
+    "symbol": "[ho]9602",
     "market": "T",
-    "name": "電算システムホールディングス",
-    "id": "1MJB4V6QwAgDKJYiPpy9G8dvXIE3YRJHm",
-    "filename": "4072_T_電算システムホールディングス_chart.png"
+    "name": "東宝",
+    "id": "18bkezTuwuzS3_2aeZ1KdqA3Fn-4cvfJ6",
+    "filename": "[ho]9602_T_東宝_chart.png",
+    "quality_score": 0.345,
+    "vol_score": 0.207,
+    "depth_score": 0.207,
+    "close_pos_score": 0.667
   },
   {
-    "symbol": "4326",
+    "symbol": "[ho]9843",
     "market": "T",
-    "name": "インテージホールディングス",
-    "id": "1T0gJeoNkAdE18NEAIy7zQcv5yp6HcbTz",
-    "filename": "4326_T_インテージホールディングス_chart.png"
+    "name": "ニトリホールディングス",
+    "id": "1elY2OrSMm3lPbW4gycK4acd5R8NSf4k1",
+    "filename": "[ho]9843_T_ニトリホールディングス_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
   },
   {
-    "symbol": "4927",
+    "symbol": "[kh]2585",
     "market": "T",
-    "name": "ポーラ・オルビスホールディングス",
-    "id": "1H10mC03RauesJLrQ5sUEUc4mFnWwpUQ_",
-    "filename": "4927_T_ポーラ・オルビスホールディングス_chart.png"
+    "name": "ライフドリンクカンパニー",
+    "id": "1N3AeCMyRlHkApRrBJbkQRp0Oz6pTRt_q",
+    "filename": "[kh]2585_T_ライフドリンクカンパニー_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
   },
   {
-    "symbol": "5970",
+    "symbol": "[kh]2801",
     "market": "T",
-    "name": "ジーテクト",
-    "id": "1FnQIjns6C21kbzrBx8dJxRvby4GxiwSB",
-    "filename": "5970_T_ジーテクト_chart.png"
+    "name": "キッコーマン",
+    "id": "1Bffbt9F4fLIt8ZZLG5s5sHCbyBOu5UOt",
+    "filename": "[kh]2801_T_キッコーマン_chart.png",
+    "quality_score": 0.42,
+    "vol_score": 0.325,
+    "depth_score": 0.299,
+    "close_pos_score": 0.667
   },
   {
-    "symbol": "6625",
+    "symbol": "[kh]4385",
     "market": "T",
-    "name": "ＪＡＬＣＯホールディングス",
-    "id": "1T_vPyNPJjL3VEDh2kr7Gz4TRGODg_TYr",
-    "filename": "6625_T_ＪＡＬＣＯホールディングス_chart.png"
+    "name": "メルカリ",
+    "id": "1Fq4u3YtzZqXa3QLHN16hd28u9R8sgQPz",
+    "filename": "[kh]4385_T_メルカリ_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
   },
   {
-    "symbol": "6810",
+    "symbol": "[kh]4578",
     "market": "T",
-    "name": "マクセル",
-    "id": "1-HJ_VKg5QHMfBU8OlaoJuocrSAZC0oti",
-    "filename": "6810_T_マクセル_chart.png"
+    "name": "大塚ホールディングス",
+    "id": "1fI1kI-80hZu_I0wd1pgtWN0P2bSM5dWD",
+    "filename": "[kh]4578_T_大塚ホールディングス_chart.png",
+    "quality_score": 0.315,
+    "vol_score": 0.243,
+    "depth_score": 0.096,
+    "close_pos_score": 0.63
   },
   {
-    "symbol": "7458",
+    "symbol": "[kh]4680",
     "market": "T",
-    "name": "第一興商",
-    "id": "1PiUtqIajqqbrhyqJIcXY08aOe7coghnF",
-    "filename": "7458_T_第一興商_chart.png"
+    "name": "ラウンドワン",
+    "id": "1h9Fa7LyVc6NeIUu80FamQE0S6D8J22RT",
+    "filename": "[kh]4680_T_ラウンドワン_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
   },
   {
-    "symbol": "7846",
+    "symbol": "[kh]5108",
     "market": "T",
-    "name": "パイロットコーポレーション",
-    "id": "1_SVkXxO4keTZvFehKMjvgWalF7NZ2sdn",
-    "filename": "7846_T_パイロットコーポレーション_chart.png"
+    "name": "ブリヂストン",
+    "id": "1CozaoHIzbm2s2sRTkBPQFCgu1qWRJubD",
+    "filename": "[kh]5108_T_ブリヂストン_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
   },
   {
-    "symbol": "7943",
+    "symbol": "[kh]5726",
     "market": "T",
-    "name": "ニチハ",
-    "id": "1S4b-WcpZddhJKqJ-7n9c0DLT626Z-gU9",
-    "filename": "7943_T_ニチハ_chart.png"
+    "name": "大阪チタニウムテクノロジーズ",
+    "id": "15kn4QcwHN1IweYEV8RVbCdCKw8O3LTv2",
+    "filename": "[kh]5726_T_大阪チタニウムテクノロジーズ_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
   },
   {
-    "symbol": "8984",
+    "symbol": "[kh]7383",
     "market": "T",
-    "name": "大和ハウスリート投資法人　投資証券",
-    "id": "1pjMU-woSBgAA_62LdtBIeb1AbK7alglD",
-    "filename": "8984_T_大和ハウスリート投資法人　投資証券_chart.png"
+    "name": "ネットプロテクションズホールディングス",
+    "id": "18FPdl7ceyDvQLzYrjBxiXxG_qS4PHLv-",
+    "filename": "[kh]7383_T_ネットプロテクションズホールディングス_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
   },
   {
-    "symbol": "9037",
+    "symbol": "[kh]7581",
     "market": "T",
-    "name": "ハマキョウレックス",
-    "id": "1RlbznlX5NZ-p3lomGXg8MAAQgoy28iAP",
-    "filename": "9037_T_ハマキョウレックス_chart.png"
+    "name": "サイゼリヤ",
+    "id": "1mr0xruZ0m2gL6CXoWl5yFuzSCi_1d6h7",
+    "filename": "[kh]7581_T_サイゼリヤ_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
   },
   {
-    "symbol": "9369",
+    "symbol": "[kh]9278",
     "market": "T",
-    "name": "キユーソー流通システム",
-    "id": "17F5GUyUnRtsaO9qnIPboUyFeXuyUf_lT",
-    "filename": "9369_T_キユーソー流通システム_chart.png"
+    "name": "ブックオフグループホールディングス",
+    "id": "1BwXj0Q1A8KN11bGJrBMeyz7QbngEtKyF",
+    "filename": "[kh]9278_T_ブックオフグループホールディングス_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[kh]9722",
+    "market": "T",
+    "name": "藤田観光",
+    "id": "1yCbjbVmcNzh-kHUq0EGRLUJ_wh9X42m2",
+    "filename": "[kh]9722_T_藤田観光_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[si]7550",
+    "market": "T",
+    "name": "ゼンショーホールディングス",
+    "id": "1d83oxJU4K_5f8fiu9RzpWWIhCj4b30Pq",
+    "filename": "[si]7550_T_ゼンショーホールディングス_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[si]8179",
+    "market": "T",
+    "name": "ロイヤルホールディングス",
+    "id": "1QX1PTAOOx9joKgWeLtvy8eXqF8wn5nOQ",
+    "filename": "[si]8179_T_ロイヤルホールディングス_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[si]9279",
+    "market": "T",
+    "name": "ギフトホールディングス",
+    "id": "1FM6DBy19mmukv4xVZH8tQGWwSreXOfQs",
+    "filename": "[si]9279_T_ギフトホールディングス_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[si]9861",
+    "market": "T",
+    "name": "吉野家ホールディングス",
+    "id": "12J9C288s91ifayT1LMHhTmSWvje80ybJ",
+    "filename": "[si]9861_T_吉野家ホールディングス_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[w]1367",
+    "market": "T",
+    "name": "ｉＦｒｅｅＥＴＦ　ＴＯＰＩＸレバレッジ（",
+    "id": "1CVeKoGTUa0DBxx8jpcYVdOvnJJXZcnht",
+    "filename": "[w]1367_T_ｉＦｒｅｅＥＴＦ　ＴＯＰＩＸレバレッジ（_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[w]1803",
+    "market": "T",
+    "name": "清水建設",
+    "id": "1FeN4hjSoT6MUa-tTTHnRusl2Ke-stVYQ",
+    "filename": "[w]1803_T_清水建設_chart.png",
+    "quality_score": 0.451,
+    "vol_score": 0.214,
+    "depth_score": 0.507,
+    "close_pos_score": 0.713
+  },
+  {
+    "symbol": "[w]1860",
+    "market": "T",
+    "name": "戸田建設",
+    "id": "1DsHO90uY98baZjerVS2Sl1xV0cYqQdpd",
+    "filename": "[w]1860_T_戸田建設_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[w]1964",
+    "market": "T",
+    "name": "中外炉工業",
+    "id": "101eF58lM0LHHhWMqXgp2zs4ddMJrzYGq",
+    "filename": "[w]1964_T_中外炉工業_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[w]2526",
+    "market": "T",
+    "name": "ＮＺＡＭ　上場投信　ＪＰＸ日経４００",
+    "id": "1fxtz8lk9gINlu-QYASEMhgYUM3ovRgBD",
+    "filename": "[w]2526_T_ＮＺＡＭ　上場投信　ＪＰＸ日経４００_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[w]2802",
+    "market": "T",
+    "name": "味の素",
+    "id": "1EjG0ZjOgDxutRhJKBBjhcVjMwHwf9VC2",
+    "filename": "[w]2802_T_味の素_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[w]2865",
+    "market": "T",
+    "name": "グローバルＸ　ＮＡＳＤＡＱ１００",
+    "id": "1jZ1wLXmwDBZpMKk4yQ0Zog3oltp4ILKH",
+    "filename": "[w]2865_T_グローバルＸ　ＮＡＳＤＡＱ１００_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[w]4316",
+    "market": "T",
+    "name": "ビーマップ",
+    "id": "1yvJ0u7mM_tETK8OXEqqc5mquibbLcC3w",
+    "filename": "[w]4316_T_ビーマップ_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[w]4369",
+    "market": "T",
+    "name": "トリケミカル研究所",
+    "id": "120zx3VkZcjExTU6LLahlaI9IQFsarst9",
+    "filename": "[w]4369_T_トリケミカル研究所_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[w]5989",
+    "market": "T",
+    "name": "エイチワン",
+    "id": "1hgexHFCGuKHAUqq7wqLaocS-lgzmcIpW",
+    "filename": "[w]5989_T_エイチワン_chart.png",
+    "quality_score": 0.324,
+    "vol_score": 0.217,
+    "depth_score": 0.174,
+    "close_pos_score": 0.615
+  },
+  {
+    "symbol": "[w]6039",
+    "market": "T",
+    "name": "日本動物高度医療センター",
+    "id": "1o6WzWorWZ3cWM1PG4-y-pCJ1qDKkHLud",
+    "filename": "[w]6039_T_日本動物高度医療センター_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[w]6232",
+    "market": "T",
+    "name": "ＡＣＳＬ",
+    "id": "1Y85Dabp9RTFquhYqrT83Bqvc4cyeA7XE",
+    "filename": "[w]6232_T_ＡＣＳＬ_chart.png",
+    "quality_score": 0.326,
+    "vol_score": 0.399,
+    "depth_score": 0.167,
+    "close_pos_score": 0.387
+  },
+  {
+    "symbol": "[w]6368",
+    "market": "T",
+    "name": "オルガノ",
+    "id": "16Dt377AsQMSjaT4TiVGPWJNUDuHSaTuX",
+    "filename": "[w]6368_T_オルガノ_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[w]6490",
+    "market": "T",
+    "name": "ＰＩＬＬＡＲ",
+    "id": "1lKMnOEAlimBCnj5skXYr9Gm1tFgzUZqq",
+    "filename": "[w]6490_T_ＰＩＬＬＡＲ_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[w]6925",
+    "market": "T",
+    "name": "ウシオ電機",
+    "id": "168jjIfmhvagstTsQ8-fdHhWgXiY6P1my",
+    "filename": "[w]6925_T_ウシオ電機_chart.png",
+    "quality_score": 0.459,
+    "vol_score": 0.197,
+    "depth_score": 0.307,
+    "close_pos_score": 0.959
+  },
+  {
+    "symbol": "[w]6965",
+    "market": "T",
+    "name": "浜松ホトニクス",
+    "id": "1yOyeftMQ3CQqE2G15rrAvMXcOXvvN1iO",
+    "filename": "[w]6965_T_浜松ホトニクス_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[w]7375",
+    "market": "T",
+    "name": "リファインバースグループ",
+    "id": "1d-JhzG-1kEt9tXAkv6kskaFPtrZsRSkk",
+    "filename": "[w]7375_T_リファインバースグループ_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
+  },
+  {
+    "symbol": "[w]8803",
+    "market": "T",
+    "name": "平和不動産",
+    "id": "1IhG3V_WHN-BDlDVDZVEaxTZSLmRgy_Gn",
+    "filename": "[w]8803_T_平和不動産_chart.png",
+    "quality_score": null,
+    "vol_score": null,
+    "depth_score": null,
+    "close_pos_score": null
   }
 ];
-/**
- * 【発展知識：UIコンポーネントでの使われ方イメージ】
- * 
- * `TickerSelector.jsx` などのコンポーネント側では、このデータを以下のように
- * `map()` 関数を使ってドロップダウン肢（<option>）へと変換します。
- * 
- * import { TICKERS } from '../data/tickers';
- * 
- * <select>
- *   {TICKERS.map((ticker) => (
- *     <option key={ticker.code} value={ticker.code}>
- *       {ticker.code} : {ticker.name}
- *     </option>
- *   ))}
- * </select>
- */

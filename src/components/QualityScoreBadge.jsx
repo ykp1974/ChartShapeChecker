@@ -12,6 +12,9 @@ const QualityScoreBadge = ({ score, volScore, depthScore, closePosScore }) => {
     // スコアデータが存在しない銘柄の場合は何も表示しない
     if (score === undefined || score === null) return null;
 
+    // 数値型に変換
+    const numScore = Number(score);
+    if (isNaN(numScore)) return null;
     return (
         <div className="relative inline-flex items-center ml-2">
             {/* 
