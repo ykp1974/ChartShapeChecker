@@ -42,11 +42,30 @@ const ChartView = ({ ticker, onPrev, onNext, selectedIds, onToggleTicker }) => {
    * チャートパターン確認用のトーストメッセージを表示する処理
    */
   const handleShowPatterns = () => {
-    const allMessages = [
-      "[kh]急落後の反騰", "[ho]初押し", "[si]三手大陰線",
-      "[si]最後の抱き陰線", "[ii]陰の陰はらみ", "[w] Wボトム、逆三尊"
-    ].join('\n');
-    setToastMessage(allMessages);
+    // 現在選択されている銘柄の symbol や filename から接頭辞を判定
+    const symbol = ticker?.symbol || ticker?.filename || '';
+    const isKhPattern = symbol.includes('[kh]');
+
+    if (isKhPattern) {
+      // [kh] 銘柄の場合に表示するテキスト
+      const khMessage = [
+        "[kh] ～注目視点～",
+        "・出来高伴う反騰",
+        "・サポート線の存在",
+        "・移動平均線の越え",
+        "・Wボトムになりそうか（翌日以降）"
+      ].join('\n');
+
+      setToastMessage(khMessage);
+    } else {
+      // 従来通りの汎用パターン一覧メッセージ
+      const defaultMessages = [
+        "[kh]急落後の反騰", "[ho]初押し", "[si]三手大陰線",
+        "[si]最後の抱き陰線", "[ii]陰の陰はらみ", "[w] Wボトム、逆三尊"
+      ].join('\n');
+
+      setToastMessage(defaultMessages);
+    }
   };
   // -----------------------------------------------------------------
   // 2. 副作用（useEffect）：表示対象銘柄（ticker）が変わったときのリセット処理
