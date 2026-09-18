@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { DRIVE_URLS } from '../config/constants';
 import Toast from './common/Toast';
+import QualityScoreBadge from './QualityScoreBadge';
 /**
  * =================================================================
  * チャート画像表示コンポーネント (ChartView.jsx)
@@ -105,11 +106,18 @@ const ChartView = ({ ticker, onPrev, onNext, selectedIds, onToggleTicker }) => {
           onChange={() => onToggleTicker(ticker.id)} // チェック切り替え関数を呼ぶ
           className="w-5 h-5 rounded border-slate-600 bg-transparent text-blue-500 focus:ring-blue-500"
         />
-        {/* 銘柄コード・名称 */}
+        {/* 銘柄コード・名称 ＆ スコアバッジ表示エリア */}
         <div className="min-w-0 flex-1">
           <h2 className="text-lg font-bold flex items-center gap-2">
             <span className="text-blue-400 font-mono">{ticker.symbol}</span>
             <span className="truncate">{ticker.name}</span>
+            {/* ↑ 初押し質スコアバッジ */}
+            <QualityScoreBadge
+              score={ticker.score}
+              volScore={ticker.vol_score}
+              depthScore={ticker.depth_score}
+              closePosScore={ticker.close_position_score}
+            />
           </h2>
           <p className="text-[10px] text-slate-500 uppercase truncate">
             {ticker.market} | {ticker.filename}
