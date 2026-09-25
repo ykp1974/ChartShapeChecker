@@ -31,6 +31,7 @@ function App() {
     setSelectedTicker,
     readStatus,
     selectedIds,
+    setSelectedIds, // 一括更新用の setter 関数を取得
     toggleTicker,
     handleToggleRead,
     handlePrev,
@@ -43,14 +44,11 @@ function App() {
   // トグル切り替え（1つのチェックボックスで全選択/全解除を行う）
   const handleToggleSelectAll = (e) => {
     if (e.target.checked) {
-      // ON（全選択）: 未選択の銘柄をすべてトグルして選択状態にする
-      tickers.forEach((t) => {
-        if (!selectedIds.includes(t.id)) {
-          toggleTicker(t.id);
-        }
-      });
+      // ON（全選択）: 全銘柄の ID 配列を生成して一括セット
+      const allIds = tickers.map((t) => t.id);
+      setSelectedIds(allIds);
     } else {
-      // OFF（全解除）: 既存のリセット関数を実行
+      // OFF（全解除）: 既存のリセット関数を実行（全選択解除）
       handleResetSelection();
     }
   };

@@ -138,6 +138,7 @@ export const useTickerState = () => {
     setSelectedTicker,
     readStatus,
     selectedIds,
+    setSelectedIds, // State更新関数を直接返却
     toggleTicker,
     handleToggleRead,
     handlePrev,
