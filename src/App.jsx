@@ -38,6 +38,23 @@ function App() {
     handleResetSelection
   } = useTickerState();
 
+  // 全選択状態の判定（すべての銘柄IDが selectedIds に含まれているか）
+  const isAllSelected = tickers.length > 0 && selectedIds.length === tickers.length;
+  // 全選択 / 全解除のハンドラー関数
+  const handleToggleSelectAll = (e) => {
+    if (e.target.checked) {
+      // 全選択: tickers の全 ID を選択状態にする（配列をループして未選択のものをトグルまたは一括セット）
+      tickers.forEach((t) => {
+        if (!selectedIds.includes(t.id)) {
+          toggleTicker(t.id);
+        }
+      });
+    } else {
+      // 全解除: 既存の全選択解除リセットを実行
+      handleResetSelection();
+    }
+  };
+
   // -----------------------------------------------------------------
   // 2. スプレッドシート同期処理 (データ整形 & API通信)
   // -----------------------------------------------------------------
@@ -112,7 +129,17 @@ function App() {
         ヘッダーナビゲーションバーエリア
         --------------------------------------------------------------
       */}
-      <header className="app-header">]
+      <header className="app-header">
+        {/* Checkbox: 全選択 / 全解除 */}
+        <label className="flex items-center gap-1.5 text-xs text-slate-300 hover:text-white cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={isAllSelected}
+            onChange={handleToggleSelectAll}
+            className="w-4 h-4 rounded border-slate-600 bg-slate-800 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-900 cursor-pointer"
+          />
+          <span>全選択</span>
+        </label>
         {/* 全選択解除リセットボタン */}
         <button
           onClick={handleResetSelection}
