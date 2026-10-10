@@ -167,7 +167,7 @@ function App() {
         */}
         <TickerSelector
           tickers={tickers}
-          selectedTicker={selectedTicker}
+          selectedTicker={filteredTickers}
           onSelect={setSelectedTicker}
           onToggleRead={handleToggleRead}
           readStatus={readStatus}
