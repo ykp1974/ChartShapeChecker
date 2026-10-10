@@ -166,8 +166,8 @@ function App() {
           親(App)から必要な State と操作関数を Props として配給します。
         */}
         <TickerSelector
-          tickers={tickers}
-          selectedTicker={filteredTickers}
+          tickers={filteredTickers}
+          selectedTicker={selectedTicker}
           onSelect={setSelectedTicker}
           onToggleRead={handleToggleRead}
           readStatus={readStatus}
