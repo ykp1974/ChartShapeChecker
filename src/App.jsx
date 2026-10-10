@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import TickerSelector from './components/TickerSelector';
 import ChartView from './components/ChartView';
 import { tickers } from './data/tickers';
@@ -154,8 +154,8 @@ function App() {
             type="button"
             onClick={() => setOnlyOptimalScore(!onlyOptimalScore)}
             className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${onlyOptimalScore
-                ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/20'
-                : 'bg-[#16161a] text-slate-400 border border-[#2d2d35] hover:text-slate-200'
+              ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/20'
+              : 'bg-[#16161a] text-slate-400 border border-[#2d2d35] hover:text-slate-200'
               }`}
           >
             {onlyOptimalScore ? '✔ 初押し適正帯 (0.3〜0.5) のみ表示中' : 'すべて表示 (フィルターオフ)'}
