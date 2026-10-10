@@ -39,6 +39,17 @@ function App() {
     handleResetSelection
   } = useTickerState();
 
+  // フィルタが有効かどうかの状態を管理
+  const [onlyOptimalScore, setOnlyOptimalScore] = useState(false);
+
+  const filteredTickers = tickers.filter(t => {
+    if (!onlyOptimalScore) return true; // フィルタオフなら全件表示
+
+    const score = Number(t.quality_score);
+    // スコアが存在し、かつ 0.3 から 0.5 の範囲内であるか
+    return !isNaN(score) && score >= 0.3 && score <= 0.5;
+  });
+
   // 全選択状態の判定（すべての銘柄IDが selectedIds に含まれているか）
   const isAllSelected = tickers.length > 0 && selectedIds.length === tickers.length;
   // トグル切り替え（1つのチェックボックスで全選択/全解除を行う）
@@ -138,6 +149,18 @@ function App() {
           />
           <span>{isAllSelected ? '全解除' : '全選択'}</span>
         </label>
+        <div className="flex items-center space-x-2 my-4">
+          <button
+            type="button"
+            onClick={() => setOnlyOptimalScore(!onlyOptimalScore)}
+            className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${onlyOptimalScore
+                ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/20'
+                : 'bg-[#16161a] text-slate-400 border border-[#2d2d35] hover:text-slate-200'
+              }`}
+          >
+            {onlyOptimalScore ? '✔ 初押し適正帯 (0.3〜0.5) のみ表示中' : 'すべて表示 (フィルターオフ)'}
+          </button>
+        </div>
         {/* 
           銘柄選択ドロップダウンコンポーネント 
           親(App)から必要な State と操作関数を Props として配給します。
