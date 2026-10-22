@@ -17,15 +17,27 @@ async function updateTickers() {
   console.log('Fetching file list from Google Drive...');
 
   try {
-    const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents+and+trashed=false&fields=files(id,name)&key=${API_KEY}`;
-    const response = await fetch(url);
-    const data = await response.json();
+    // pageSize=1000 で最大1000件取得（Drive APIのデフォルトは100件でページネーション必須）
+    // 1000件を超える場合はnextPageTokenでループが必要だが、現状の規模では不要
+    const allFiles = [];
+    let pageToken = '';
 
-    if (data.error) {
-      throw new Error(data.error.message);
-    }
+    do {
+      const pageParam = pageToken ? `&pageToken=${pageToken}` : '';
+      const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents+and+trashed=false&fields=nextPageToken,files(id,name)&pageSize=1000${pageParam}&key=${API_KEY}`;
+      const response = await fetch(url);
+      const data = await response.json();
 
-    const files = data.files || [];
+      if (data.error) {
+        throw new Error(data.error.message);
+      }
+
+      allFiles.push(...(data.files || []));
+      pageToken = data.nextPageToken || '';
+    } while (pageToken);
+
+    const files = allFiles;
+    console.log(`Google Driveから ${files.length} 件のエントリを取得しました。`);
 
     // -----------------------------------------------------------------
     // 1. Googleドライブ上の ticker_list.json からスコア情報を取得

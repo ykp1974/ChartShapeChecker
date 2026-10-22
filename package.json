@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "update-tickers": "node scripts/update-tickers.js",
+    "update-tickers": "node --env-file=.env scripts/update-tickers.js",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui"
