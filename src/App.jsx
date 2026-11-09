@@ -184,7 +184,7 @@ function App() {
                 : 'bg-[#16161a] text-slate-400 border border-[#2d2d35] hover:text-slate-200'
                 }`}
             >
-              {chartVisible ? 'チャート表示: ON' : 'チャート表示: OFF'}
+              {chartVisible ? 'ON' : 'OFF'}
             </button>
           )}
         </div>
