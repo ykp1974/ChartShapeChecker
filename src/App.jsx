@@ -4,6 +4,7 @@ import ChartView from './components/ChartView';
 import { tickers } from './data/tickers';
 import { syncTickersToSpreadsheet } from './services/gasApi';
 import { useTickerState } from './hooks/useTickerState';
+import { isPcDevice } from './utils/device';
 /**
  * =================================================================
  * ルート（最上位）コンポーネント (src/App.jsx)
@@ -41,6 +42,17 @@ function App() {
 
   // フィルタが有効かどうかの状態を管理
   const [onlyOptimalScore, setOnlyOptimalScore] = useState(false);
+
+  // -----------------------------------------------------------------
+  // 1-2. チャート表示の初期状態（PC のみ OFF 開始・トグルで ON）
+  // -----------------------------------------------------------------
+  // PC の場合はチャートの初期表示を OFF にし、ヘッダーのトグルで ON にする。
+  // PC 以外（スマホ・タブレット等）は従来どおり最初からチャートを表示する。
+  // 判定は初回マウント時に一度だけ行う（useState の初期化関数として渡す）。
+  const [isPc] = useState(isPcDevice);
+  const [chartVisible, setChartVisible] = useState(!isPc);
+  // PC かつトグルが OFF のときは、チャートの代わりに案内メッセージを表示する
+  const showChart = !isPc || chartVisible;
 
   const filteredTickers = tickers.filter(t => {
     if (!onlyOptimalScore) return true; // フィルタオフなら全件表示
@@ -160,6 +172,21 @@ function App() {
           >
             {onlyOptimalScore ? '✔ 初押し適正帯 (0.3〜0.5) のみ表示中' : 'すべて表示 (フィルターオフ)'}
           </button>
+          {/* PC のみ表示するチャート表示トグル（PC 以外では表示しない） */}
+          {isPc && (
+            <button
+              type="button"
+              role="switch"
+              aria-checked={chartVisible}
+              onClick={() => setChartVisible(!chartVisible)}
+              className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${chartVisible
+                ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20'
+                : 'bg-[#16161a] text-slate-400 border border-[#2d2d35] hover:text-slate-200'
+                }`}
+            >
+              {chartVisible ? 'チャート表示: ON' : 'チャート表示: OFF'}
+            </button>
+          )}
         </div>
         {/* 
           銘柄選択ドロップダウンコンポーネント 
@@ -189,13 +216,22 @@ function App() {
         --------------------------------------------------------------
       */}
       <main className="flex-1 flex flex-col min-h-0 bg-[#050507]">
-        <ChartView
-          ticker={selectedTicker}
-          selectedIds={selectedIds}
-          onToggleTicker={toggleTicker}
-          onPrev={handlePrev}
-          onNext={handleNext}
-        />
+        {showChart ? (
+          <ChartView
+            ticker={selectedTicker}
+            selectedIds={selectedIds}
+            onToggleTicker={toggleTicker}
+            onPrev={handlePrev}
+            onNext={handleNext}
+          />
+        ) : (
+          // PC でチャート表示が OFF の場合の案内表示（ChartView はマウントしない）
+          <div className="flex-1 flex items-center justify-center bg-[#050507]">
+            <p className="text-sm text-slate-500">
+              チャートは非表示です。ヘッダーの「チャート表示: OFF」を押すと表示されます。
+            </p>
+          </div>
+        )}
       </main>
       {/* 
         --------------------------------------------------------------

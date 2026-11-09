@@ -1,9 +1,16 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from './App';
+import { isPcDevice } from './utils/device';
+
+// デバイス判定を差し替え可能にする（デフォルトは PC 以外＝従来どおりチャート表示）
+vi.mock('./utils/device', () => ({
+  isPcDevice: vi.fn(() => false),
+}));
 
 describe('App Component', () => {
   beforeEach(() => {
+    isPcDevice.mockReturnValue(false);
     vi.spyOn(Storage.prototype, 'setItem');
     global.fetch = vi.fn(() => Promise.resolve({
       json: () => Promise.resolve({}),
@@ -66,5 +73,31 @@ describe('App Component', () => {
     const event = new KeyboardEvent('keydown', { key: 'ArrowRight' });
     window.dispatchEvent(event);
     document.body.removeChild(input);
+  });
+
+  describe('チャート表示の初期状態（デバイス別）', () => {
+    it('PC の場合、初期表示は OFF でチャートは表示されない', () => {
+      isPcDevice.mockReturnValue(true);
+      render(<App />);
+      expect(screen.getByRole('switch')).toHaveAttribute('aria-checked', 'false');
+      expect(screen.getByText('チャート表示: OFF')).toBeInTheDocument();
+      expect(screen.getByText(/チャートは非表示です/)).toBeInTheDocument();
+    });
+
+    it('PC の場合、トグルを押すとチャートが表示される', () => {
+      isPcDevice.mockReturnValue(true);
+      render(<App />);
+      fireEvent.click(screen.getByRole('switch'));
+      expect(screen.getByRole('switch')).toHaveAttribute('aria-checked', 'true');
+      expect(screen.getByText('チャート表示: ON')).toBeInTheDocument();
+      expect(screen.queryByText(/チャートは非表示です/)).not.toBeInTheDocument();
+    });
+
+    it('PC 以外の場合、トグルは表示されず最初からチャートが表示される', () => {
+      isPcDevice.mockReturnValue(false);
+      render(<App />);
+      expect(screen.queryByRole('switch')).not.toBeInTheDocument();
+      expect(screen.queryByText(/チャートは非表示です/)).not.toBeInTheDocument();
+    });
   });
 });
