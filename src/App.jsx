@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import TickerSelector from './components/TickerSelector';
 import ChartView from './components/ChartView';
+import Toast from './components/common/Toast';
 import { tickers } from './data/tickers';
 import { syncTickersToSpreadsheet } from './services/gasApi';
 import { useTickerState } from './hooks/useTickerState';
@@ -53,6 +54,11 @@ function App() {
   const [chartVisible, setChartVisible] = useState(!isPc);
   // PC かつトグルが OFF のときは、チャートの代わりに案内メッセージを表示する
   const showChart = !isPc || chartVisible;
+
+  // 同期完了の通知トースト（null の時は非表示）
+  // id は同じメッセージを連続表示したときにトーストを再マウントし、表示時間をリセットするためのキー
+  const [syncToast, setSyncToast] = useState(null);
+  const closeSyncToast = useCallback(() => setSyncToast(null), []);
 
   const filteredTickers = tickers.filter(t => {
     if (!onlyOptimalScore) return true; // フィルタオフなら全件表示
@@ -110,7 +116,7 @@ function App() {
     try {
       // 外部サービスモジュール（gasApi.js）を介して通信を実行
       await syncTickersToSpreadsheet(selectedTickerDetails);
-      alert('スプレッドシートに同期しました！');
+      setSyncToast({ id: Date.now(), message: 'スプレッドシートに同期しました！' });
     } catch (error) {
       console.error('保存失敗:', error);
     }
@@ -241,6 +247,10 @@ function App() {
       <button onClick={() => saveToSpreadsheet(selectedIds)} className="bg-green-600 p-2 rounded">
         スプレッドシートへ同期
       </button>
+      {/* 同期完了のトースト通知（アラートの代わり） */}
+      {syncToast && (
+        <Toast key={syncToast.id} message={syncToast.message} onClose={closeSyncToast} />
+      )}
     </div>
 
   );

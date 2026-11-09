@@ -40,7 +40,9 @@ describe('App Component', () => {
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalled();
     });
-    expect(window.alert).toHaveBeenCalledWith('スプレッドシートに同期しました！');
+    // 完了通知はアラートではなくトーストで表示される
+    expect(await screen.findByText('スプレッドシートに同期しました！')).toBeInTheDocument();
+    expect(window.alert).not.toHaveBeenCalled();
   });
 
   it('navigates to next ticker when ArrowRight is pressed and prev ticker when ArrowLeft is pressed', () => {
@@ -80,7 +82,7 @@ describe('App Component', () => {
       isPcDevice.mockReturnValue(true);
       render(<App />);
       expect(screen.getByRole('switch')).toHaveAttribute('aria-checked', 'false');
-      expect(screen.getByText('チャート表示: OFF')).toBeInTheDocument();
+      expect(screen.getByRole('switch')).toHaveTextContent('OFF');
       expect(screen.getByText(/チャートは非表示です/)).toBeInTheDocument();
     });
 
@@ -89,7 +91,7 @@ describe('App Component', () => {
       render(<App />);
       fireEvent.click(screen.getByRole('switch'));
       expect(screen.getByRole('switch')).toHaveAttribute('aria-checked', 'true');
-      expect(screen.getByText('チャート表示: ON')).toBeInTheDocument();
+      expect(screen.getByRole('switch')).toHaveTextContent('ON');
       expect(screen.queryByText(/チャートは非表示です/)).not.toBeInTheDocument();
     });
 
